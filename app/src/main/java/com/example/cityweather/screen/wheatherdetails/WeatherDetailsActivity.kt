@@ -5,14 +5,14 @@ import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.cityweather.R
-import com.example.cityweather.data.pojo.Weather
+import com.example.cityweather.data.pojo.City
 import com.example.cityweather.di.Injectable
 import javax.inject.Inject
 
 class WeatherDetailsActivity : MvpAppCompatActivity(), Injectable, WeatherDetailsView {
 
     companion object {
-        const val EXTRA_CITY_NAME: String = "extra_city_name"
+        const val EXTRA_CITY_ID: String = "extra_city_id"
     }
 
     @Inject
@@ -21,7 +21,7 @@ class WeatherDetailsActivity : MvpAppCompatActivity(), Injectable, WeatherDetail
 
     @ProvidePresenter
     fun providePresenter(): WeatherDetailsPresenter {
-        presenter.cityName = intent?.getStringExtra(EXTRA_CITY_NAME)
+        presenter.cityId = intent?.getIntExtra(EXTRA_CITY_ID, 0)!!
         return presenter
     }
 
@@ -30,7 +30,7 @@ class WeatherDetailsActivity : MvpAppCompatActivity(), Injectable, WeatherDetail
         setContentView(R.layout.activity_weather_details)
     }
 
-    override fun showWeather(weather: Weather) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showWeather(weather: City) {
+
     }
 }

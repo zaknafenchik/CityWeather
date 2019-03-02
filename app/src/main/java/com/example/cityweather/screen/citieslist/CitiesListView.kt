@@ -6,5 +6,5 @@ import com.example.cityweather.data.pojo.City
 interface CitiesListView : MvpView {
     fun showCities(cities: List<City>)
 
-    fun openWeatherDetailsScreen(city: String)
+    fun openWeatherDetailsScreen(cityId: Int)
 }

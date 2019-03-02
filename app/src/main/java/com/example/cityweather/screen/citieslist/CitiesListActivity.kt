@@ -2,7 +2,6 @@ package com.example.cityweather.screen.citieslist
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -15,14 +14,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 
-
 class CitiesListActivity : MvpAppCompatActivity(), Injectable, CitiesListView {
 
     @Inject
     @InjectPresenter
     lateinit var presenter: CitiesListPresenter
 
-    private val adapter : CitiesListAdapter = CitiesListAdapter {presenter.onItemCLickListener(it)}
+    private val adapter: CitiesListAdapter = CitiesListAdapter { presenter.onItemCLickListener(it) }
 
     @ProvidePresenter
     fun providePresenter() = presenter
@@ -42,9 +40,9 @@ class CitiesListActivity : MvpAppCompatActivity(), Injectable, CitiesListView {
         adapter.setCities(cities)
     }
 
-    override fun openWeatherDetailsScreen(city: String) {
+    override fun openWeatherDetailsScreen(cityId: Int) {
         val intent = Intent(this, WeatherDetailsActivity::class.java)
-        intent.putExtra(WeatherDetailsActivity.EXTRA_CITY_NAME,city)
+        intent.putExtra(WeatherDetailsActivity.EXTRA_CITY_ID, cityId)
         startActivity(intent)
     }
 }

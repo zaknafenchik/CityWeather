@@ -2,7 +2,6 @@ package com.example.cityweather.data.repo
 
 import android.util.Log
 import com.example.cityweather.data.pojo.City
-import com.example.cityweather.data.pojo.Weather
 import com.example.cityweather.data.repo.local.LocalDataSource
 import com.example.cityweather.data.repo.remote.RemoteDataSource
 import io.reactivex.Single
@@ -12,8 +11,8 @@ class RepoImpl(
     private val localDataSource: LocalDataSource
 ) : Repository {
 
-    override fun loadWeather(name: String): Single<Weather> {
-        return localDataSource.loadWeather(name)
+    override fun loadCIty(id: Int): Single<City> {
+        return localDataSource.loadCity(id)
     }
 
     companion object {
@@ -26,9 +25,8 @@ class RepoImpl(
                 for (city in cities) {
                     remoteDataSource.loadWeather(city.lat, city.lon)
                         .subscribe({ weather ->
-                            weather.cityName = city.name
                             city.weather = weather
-                            localDataSource.saveCity(city)
+                            localDataSource.updateCity(city)
                         }, { t -> Log.d(TAG, t.message) })
                 }
                 cities

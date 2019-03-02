@@ -13,14 +13,14 @@ class WeatherDetailsPresenter(private val repo: Repository) : BasePresenter<Weat
         val TAG: String = WeatherDetailsPresenter::class.java.simpleName
     }
 
-    var cityName: String? = null
+    var cityId: Int = 0
         set(value) {
             field = value
             field?.let { loadCity(it) }
         }
 
-    private fun loadCity(name: String) {
-        compositeDisposable.add(repo.loadWeather(name)
+    private fun loadCity(id: Int) {
+        compositeDisposable.add(repo.loadCIty(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

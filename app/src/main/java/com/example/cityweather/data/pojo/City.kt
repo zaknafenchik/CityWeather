@@ -6,7 +6,9 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "cities")
 data class City(
-    @PrimaryKey val name: String,
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
+    val name: String,
     val lat: Double, val lon: Double,
     @Embedded var weather: Weather? = null
 )

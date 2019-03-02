@@ -29,7 +29,7 @@ class CitiesListPresenter(private val repo: Repository) : BasePresenter<CitiesLi
         )
     }
 
-    fun onItemCLickListener(name: String) {
-        viewState.openWeatherDetailsScreen(name)
+    fun onItemCLickListener(id: Int) {
+        viewState.openWeatherDetailsScreen(id)
     }
 }

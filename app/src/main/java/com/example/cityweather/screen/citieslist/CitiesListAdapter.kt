@@ -9,7 +9,7 @@ import com.example.cityweather.data.pojo.City
 import kotlinx.android.synthetic.main.recycler_cities_list_item.view.*
 import java.util.*
 
-class CitiesListAdapter (val itemClickListener: (name: String) -> Unit) : RecyclerView.Adapter<CitiesListAdapter.CitiesListVH>() {
+class CitiesListAdapter (val itemClickListener: (id: Int) -> Unit) : RecyclerView.Adapter<CitiesListAdapter.CitiesListVH>() {
     private val cities = ArrayList<City>()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CitiesListVH {
@@ -21,7 +21,7 @@ class CitiesListAdapter (val itemClickListener: (name: String) -> Unit) : Recycl
         val city  = cities[i]
         vh.itemView.tvCityName.text = city.name
         vh.itemView.tvTemperature.text = city.weather?.temperature.toString()
-        vh.itemView.setOnClickListener { itemClickListener(city.name) }
+        vh.itemView.setOnClickListener { itemClickListener(city.id) }
     }
 
     override fun getItemCount(): Int {

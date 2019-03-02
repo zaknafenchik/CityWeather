@@ -1,7 +1,6 @@
 package com.example.cityweather.data.repo.local
 
 import com.example.cityweather.data.pojo.City
-import com.example.cityweather.data.pojo.Weather
 import com.example.cityweather.util.CityProvider
 import io.reactivex.Single
 
@@ -17,11 +16,11 @@ class DiskDataSource(private val cityWeatherDAO: CityWeatherDAO) : LocalDataSour
             }
     }
 
-    override fun saveCity(city: City) {
-       cityWeatherDAO.insertCity(city)
+    override fun updateCity(city: City) {
+        cityWeatherDAO.updateCity(city)
     }
 
-    override fun loadWeather(name: String): Single<Weather> {
-      return cityWeatherDAO.loadWeather(name)
+    override fun loadCity(id: Int): Single<City> {
+        return cityWeatherDAO.loadCity(id)
     }
 }
