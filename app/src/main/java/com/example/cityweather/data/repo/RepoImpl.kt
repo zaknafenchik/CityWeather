@@ -32,4 +32,22 @@ class RepoImpl(
                 cities
             }
     }
+
+    override fun findCity(name: String): Single<City> {
+        return remoteDataSource.findCity(name)
+            .map {
+                if (it.isEmpty()) {
+                    throw Exception("Not Found City")
+                } else {
+                    it[0]
+                }
+            }.map {
+                remoteDataSource.loadWeather(it.lat, it.lon)
+                    .subscribe({ weather ->
+                        it.weather = weather
+                        it.id = localDataSource.saveCity(it)
+                    }, { t -> Log.d(TAG, t.message) })
+                it
+            }
+    }
 }

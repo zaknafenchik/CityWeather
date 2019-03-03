@@ -23,4 +23,8 @@ class DiskDataSource(private val cityWeatherDAO: CityWeatherDAO) : LocalDataSour
     override fun loadCity(id: Int): Single<City> {
         return cityWeatherDAO.loadCity(id)
     }
+
+    override fun saveCity(city: City): Int {
+        return cityWeatherDAO.insertCity(city).toInt()
+    }
 }

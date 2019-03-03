@@ -3,6 +3,7 @@ package com.example.cityweather.di
 import android.arch.persistence.room.Room
 import android.content.Context
 import com.example.cityweather.App
+import com.example.cityweather.data.api.GooglePlaceApi
 import com.example.cityweather.data.api.WeatherApi
 import com.example.cityweather.data.repo.RepoImpl
 import com.example.cityweather.data.repo.Repository
@@ -44,8 +45,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideRemoteDataSource(weatherApi: WeatherApi): RemoteDataSource {
-        return CloudDataSource(weatherApi)
+    fun provideRemoteDataSource(weatherApi: WeatherApi, googlePlaceApi: GooglePlaceApi): RemoteDataSource {
+        return CloudDataSource(weatherApi,googlePlaceApi)
     }
 
     @Provides

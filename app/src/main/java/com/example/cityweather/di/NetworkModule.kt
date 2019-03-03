@@ -1,6 +1,7 @@
 package com.example.cityweather.di
 
 import android.content.Context
+import com.example.cityweather.data.api.GooglePlaceApi
 import com.example.cityweather.data.api.WeatherApi
 import com.example.cityweather.di.qualifier.ApplicationContext
 import com.google.gson.Gson
@@ -26,7 +27,11 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    internal fun provideRetrofit(client: OkHttpClient, @Named("weather_base_url") baseUrl: String, gson: Gson): Retrofit {
+    @Named("weather_retrofit")
+    internal fun provideWeatherRetrofit(
+        client: OkHttpClient, @Named("weather_base_url") baseUrl: String,
+        gson: Gson
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(client)
@@ -37,14 +42,42 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    internal fun provideApiService(retrofit: Retrofit): WeatherApi {
+    @Named("google_retrofit")
+    internal fun provideGoogleRetrofit(
+        client: OkHttpClient, @Named("google_place_base_url") baseUrl: String,
+        gson: Gson
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(client)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    internal fun provideApiService(@Named("weather_retrofit") retrofit: Retrofit): WeatherApi {
         return retrofit.create(WeatherApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    internal fun provideGoogleApiService(@Named("google_retrofit") retrofit: Retrofit): GooglePlaceApi {
+        return retrofit.create(GooglePlaceApi::class.java)
     }
 
     @Singleton
     @Named("weather_base_url")
     @Provides
-    internal fun provideBaseUrl(): String {
+    internal fun provideWeatherUrl(): String {
         return "http://api.openweathermap.org/data/2.5/"
+    }
+
+    @Singleton
+    @Named("google_place_base_url")
+    @Provides
+    internal fun provideGoooglePlaceUrl(): String {
+        return "https://maps.googleapis.com/maps/api/place/"
     }
 }

@@ -7,4 +7,8 @@ interface CitiesListView : MvpView {
     fun showCities(cities: List<City>)
 
     fun openWeatherDetailsScreen(cityId: Int)
+
+    fun showAddCityScreen()
+    fun showMessage(message: String?)
+    fun showCity(it: City)
 }

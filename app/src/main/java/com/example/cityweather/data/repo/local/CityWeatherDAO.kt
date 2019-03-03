@@ -11,7 +11,7 @@ interface CityWeatherDAO {
     fun insertCities(cities: List<City>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCity(city: City)
+    fun insertCity(city: City): Long
 
     @Update
     fun updateCity(city: City)

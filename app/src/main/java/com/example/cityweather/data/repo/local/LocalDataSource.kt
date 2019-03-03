@@ -7,4 +7,5 @@ interface LocalDataSource {
     fun loadCities(): Single<List<City>>
     fun updateCity(city: City)
     fun loadCity(id: Int): Single<City>
+    fun saveCity(city: City): Int
 }

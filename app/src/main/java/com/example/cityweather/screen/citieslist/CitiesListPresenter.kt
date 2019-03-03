@@ -32,4 +32,18 @@ class CitiesListPresenter(private val repo: Repository) : BasePresenter<CitiesLi
     fun onItemCLickListener(id: Int) {
         viewState.openWeatherDetailsScreen(id)
     }
+
+    fun onAddCityClick() {
+        viewState.showAddCityScreen()
+    }
+
+    fun findCity(query: String) {
+        compositeDisposable.add(repo.findCity(query)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                viewState.showCity(it)
+            }, { viewState.showMessage(it.message) })
+        )
+    }
 }

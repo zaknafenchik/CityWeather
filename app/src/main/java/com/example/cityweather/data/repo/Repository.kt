@@ -7,4 +7,6 @@ interface Repository {
     fun loadCities(): Single<List<City>>
 
     fun loadCIty(id: Int): Single<City>
+
+    fun findCity(name : String):Single<City>
 }
