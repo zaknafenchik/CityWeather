@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -83,5 +84,12 @@ class CitiesListActivity : MvpAppCompatActivity(), Injectable, CitiesListView {
 
     override fun showCity(it: City) {
         adapter.addCity(it)
+    }
+
+    override fun showProgress(show: Boolean) {
+        progressBar.visibility = when (show) {
+            true -> View.VISIBLE
+            else -> View.GONE
+        }
     }
 }

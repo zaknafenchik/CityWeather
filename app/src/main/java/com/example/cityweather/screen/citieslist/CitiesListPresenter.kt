@@ -23,6 +23,8 @@ class CitiesListPresenter(private val repo: Repository) : BasePresenter<CitiesLi
             repo.loadCities()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { viewState.showProgress(true) }
+                .doAfterTerminate { viewState.showProgress(false) }
                 .subscribe({
                     viewState.showCities(it)
                 }, { Log.d(TAG, it.message) })
@@ -38,12 +40,15 @@ class CitiesListPresenter(private val repo: Repository) : BasePresenter<CitiesLi
     }
 
     fun findCity(query: String) {
-        compositeDisposable.add(repo.findCity(query)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                viewState.showCity(it)
-            }, { viewState.showMessage(it.message) })
+        compositeDisposable.add(
+            repo.findCity(query)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { viewState.showProgress(true) }
+                .doAfterTerminate { viewState.showProgress(false) }
+                .subscribe({
+                    viewState.showCity(it)
+                }, { viewState.showMessage(it.message) })
         )
     }
 }

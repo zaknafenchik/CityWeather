@@ -11,4 +11,5 @@ interface CitiesListView : MvpView {
     fun showAddCityScreen()
     fun showMessage(message: String?)
     fun showCity(it: City)
+    fun showProgress(show: Boolean)
 }
